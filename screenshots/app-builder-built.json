@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Founded in gut health. Experts in microbiome. | Plexus Worldwide®",
+      "hasCanvas": false,
+      "bodyTextLen": 3140,
+      "bodyTextHash": "180c7ec20fe23a2e9f3c3ede9300cc507aafc3e22606dea70332ea721ee883f9",
+      "bodyTextPrefix": "Feel good. Give back. Learn more. Shop Experience Plexus About R",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Founded in gut health. Experts in microbiome. | Plexus Worldwide®",
+      "hasCanvas": false,
+      "bodyTextLen": 3072,
+      "bodyTextHash": "1412b1565c967eb631641b135b162c1d71d1c4383518582967a4cfeec197b014",
+      "bodyTextPrefix": "Feel good. Give back. Learn more. FAVORITES LIMITED TIME · SEPT.",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}
