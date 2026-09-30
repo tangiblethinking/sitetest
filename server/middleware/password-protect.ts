@@ -1,34 +1,38 @@
 /**
  * Site-wide Basic Auth password gate.
- * Password: uxfun (empty username accepted).
- * Runs as Nitro global middleware.
+ * Password: uxfun (any username).
+ * Auto-registered as Nitro global middleware via serverDir.
  */
-export default defineEventHandler((event) => {
-  const authHeader = getHeader(event, "authorization");
-  const expected = "Basic " + Buffer.from(":uxfun").toString("base64");
+interface AuthEvent {
+  req: { headers: Headers };
+}
 
-  if (authHeader === expected) {
-    return;
+function isAuthorized(authHeader: string | null): boolean {
+  if (!authHeader?.startsWith("Basic ")) return false;
+  try {
+    const decoded = atob(authHeader.slice(6));
+    const colon = decoded.indexOf(":");
+    const password = colon >= 0 ? decoded.slice(colon + 1) : decoded;
+    return password === "uxfun";
+  } catch {
+    return false;
+  }
+}
+
+export default function passwordProtectMiddleware(
+  event: AuthEvent,
+  next: () => unknown | Promise<unknown>,
+): unknown | Promise<unknown> {
+  const authHeader = event.req.headers.get("authorization");
+  if (isAuthorized(authHeader)) {
+    return next();
   }
 
-  // Also accept username "user" or any username with password uxfun
-  if (authHeader?.startsWith("Basic ")) {
-    try {
-      const decoded = Buffer.from(authHeader.slice(6), "base64").toString("utf8");
-      const colon = decoded.indexOf(":");
-      const password = colon >= 0 ? decoded.slice(colon + 1) : decoded;
-      if (password === "uxfun") {
-        return;
-      }
-    } catch {
-      // fall through
-    }
-  }
-
-  setHeader(event, "WWW-Authenticate", 'Basic realm="Protected"');
-  throw createError({
-    statusCode: 401,
-    statusMessage: "Unauthorized",
-    message: "Password required",
+  return new Response("Password required", {
+    status: 401,
+    headers: {
+      "WWW-Authenticate": 'Basic realm="Protected"',
+      "Content-Type": "text/plain; charset=utf-8",
+    },
   });
-});
+}
